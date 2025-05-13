@@ -1,6 +1,8 @@
 # Node.js 패키지 폴더 (필수)
 node_modules/
 
+init.sql
+
 # 환경 변수 파일 (보안 관련)
 .env
 .env.local
@@ -44,5 +46,3 @@ Thumbs.db
 # Firebase, AWS, Vercel 관련 설정 파일 (선택적)
 .firebase/
 .netlify/
-
-.sql
