@@ -12,9 +12,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 app.use('/users', require('./routes/users'));
-app.use('/write-thanks', require('./routes/writeThanks'));
-app.use('/write-regrets', require('./routes/writeRegrets'));
-app.use('/write-post', require('./routes/writePost'));
+app.use('/write-diary', require('./routes/writeDiary'));
 app.use('/replys', require('./routes/replys'));
 app.use('/uprodes', require('./routes/uprodes'));
 
