@@ -46,3 +46,5 @@ Thumbs.db
 # Firebase, AWS, Vercel 관련 설정 파일 (선택적)
 .firebase/
 .netlify/
+
+3206_keypair.pem
