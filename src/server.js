@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
+const authRouter = require('./routes/auth');
 
 require('dotenv').config();
 
@@ -24,6 +24,8 @@ app.use('/users', require('./routes/users'));
 app.use('/write-diary', require('./routes/writeDiary'));
 app.use('/replys', require('./routes/replys'));
 app.use('/uprodes', require('./routes/uprodes'));
+app.use('/api/auth', authRouter);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
