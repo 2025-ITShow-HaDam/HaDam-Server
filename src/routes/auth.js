@@ -7,23 +7,23 @@ require('dotenv').config();
 
 router.post('/login', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { user_id, password } = req.body;
 
-        if (!email || !password) {
-            return res.status(400).json({ error: '이메일과 비밀번호를 입력해주세요.' });
+        if (!user_id || !password) {
+            return res.status(400).json({ error: '아이디와 비밀번호를 입력해주세요.' });
         }
 
-        const [users] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        const [users] = await db.query('SELECT * FROM users WHERE user_id = ?', [user_id]);
 
         if (users.length === 0) {
-            return res.status(401).json({ error: '존재하지 않는 사용자' });
+            return res.status(401).json({ error: '존재하지 않는 사용자입니다.' });
         }
 
         const user = users[0];
 
-        // bcrypt 비교 대신 평문 비교
+        // bcrypt 안 쓰는 평문 비교
         if (password !== user.password) {
-            return res.status(401).json({ error: '비밀번호가 일치하지 않습니다' });
+            return res.status(401).json({ error: '비밀번호가 일치하지 않습니다.' });
         }
 
         const token = jwt.sign(
