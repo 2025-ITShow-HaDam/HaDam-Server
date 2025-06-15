@@ -4,7 +4,6 @@ const db = require('../db');
 const jwt = require('jsonwebtoken');
 const controller = require('../controllers/usersController');
 
-
 router.post('/', controller.create);
 router.get('/', controller.getAll);
 router.patch('/:user_id', controller.update);
@@ -20,13 +19,13 @@ router.post('/login', async (req, res) => {
         const [users] = await db.query('SELECT * FROM users WHERE user_id = ?', [user_id]);
 
         if (users.length === 0) {
-            return res.status(401).json({ error: '존재하지 않는 사용자입니다.' });
+            return res.status(401).json({ error: '존재하지 않는 사용자입니다' });
         }
 
         const user = users[0];
 
         if (password !== user.password) {
-            return res.status(401).json({ error: '비밀번호가 일치하지 않습니다.' });
+            return res.status(401).json({ error: '비밀번호가 일치하지 않습니다' });
         }
 
         const token = jwt.sign(
@@ -48,6 +47,7 @@ router.post('/login', async (req, res) => {
         return res.status(500).json({ error: '서버 오류' });
     }
 });
+
 
 
 module.exports = router;
