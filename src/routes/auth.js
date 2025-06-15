@@ -21,7 +21,6 @@ router.post('/login', async (req, res) => {
 
         const user = users[0];
 
-        // bcrypt 안 쓰는 평문 비교
         if (password !== user.password) {
             return res.status(401).json({ error: '비밀번호가 일치하지 않습니다.' });
         }
@@ -35,7 +34,13 @@ router.post('/login', async (req, res) => {
             { expiresIn: '365d' }
         );
 
-        return res.status(200).json({ token });
+        return res.status(200).json({
+            token,
+            user_id: user.user_id,
+            email: user.email,
+            username: user.username,
+            profile: user.profile || 'https://hadam.mirim-it-show.site/assets/profil.svg'
+        });
 
     } catch (err) {
         console.error('로그인 오류:', err);
