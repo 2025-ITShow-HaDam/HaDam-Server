@@ -32,7 +32,7 @@ router.post('/login', async (req, res) => {
                 email: user.email,
             },
             process.env.JWT_KEY,
-            { expiresIn: '2h' }
+            { expiresIn: '365d' }
         );
 
         return res.status(200).json({ token });
