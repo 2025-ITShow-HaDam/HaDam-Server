@@ -25,6 +25,7 @@ app.use('/write-diary', require('./routes/writeDiary'));
 app.use('/replys', require('./routes/replys'));
 app.use('/uprodes', require('./routes/uprodes'));
 app.use('/api/auth', authRouter);
+app.use('/reactions', require('./routes/reactions'));
 
 
 const PORT = process.env.PORT || 3000;
