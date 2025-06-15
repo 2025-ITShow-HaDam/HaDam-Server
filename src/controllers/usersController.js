@@ -2,8 +2,11 @@ const db = require('../db');
 
 exports.create = async (req, res) => {
     const {
-        user_id, email, name, profile, password
+        user_id, email, name,  password
     } = req.body;
+
+    const profile = req.body.profile || 'https://hadam.mirim-it-show.site/assets/profil.svg';
+
     try {
         await db.query(
             'INSERT INTO users (user_id, email, name, profile, password) VALUES (?, ?, ?, ?, ?)',
