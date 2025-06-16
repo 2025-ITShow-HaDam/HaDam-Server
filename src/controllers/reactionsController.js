@@ -18,16 +18,19 @@ exports.createReaction = async (req, res) => {
   }
 };
 
-exports.getReactions = async (req, res) => {
+exports.getReactionsWithUsers = async (req, res) => {
   const diaryId = req.params.diaryId;
 
   try {
-    const [rows] = await db.execute(
-      `SELECT reaction_type, COUNT(*) AS count FROM reactions WHERE diary_id = ? GROUP BY reaction_type`,
-      [diaryId]
-    );
-    res.status(200).json({ reactions: rows });
+      const [rows] = await db.execute(
+          `SELECT r.reaction_type, r.user_id, u.name 
+           FROM reactions r 
+           JOIN users u ON r.user_id = u.user_id 
+           WHERE r.diary_id = ?`,
+          [diaryId]
+      );
+      res.status(200).json({ reactions: rows });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+      res.status(500).json({ error: err.message });
   }
 };
