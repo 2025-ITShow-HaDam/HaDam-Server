@@ -18,6 +18,20 @@ exports.createReaction = async (req, res) => {
   }
 };
 
+exports.getReactions = async (req, res) => {
+  const diaryId = req.params.diaryId;
+
+  try {
+    const [rows] = await db.execute(
+      `SELECT * FROM reactions WHERE diary_id = ?`,
+      [diaryId]
+    );
+    res.status(200).json({ reactions: rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 exports.getReactionsWithUsers = async (req, res) => {
   const diaryId = req.params.diaryId;
 
