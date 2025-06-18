@@ -40,11 +40,31 @@ exports.get = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
+  // 1) URL 파라미터에서 id 가져오기
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    return res.status(400).json({ error: "유효하지 않은 ID입니다." });
+  }
+
   try {
-    await db.query("DELETE FROM write_diary WHERE id = ?", [req.params.id]);
-    res.status(200).json({ message: "삭제 성공" });
-  } catch (error) {
-    console.error("삭제 오류:", error);
-    res.status(500).json({ error: "삭제 실패" });
+    // 2) 연관된 reactions 먼저 삭제
+    await db.query("DELETE FROM reactions WHERE diary_id = ?", [id]);
+
+    // 3) write_diary에서 실제 일기 삭제
+    const [result] = await db.query(
+      "DELETE FROM write_diary WHERE id = ?",
+      [id]
+    );
+
+    // 4) 없는 ID를 삭제하려 할 때 404 처리
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "해당 일기를 찾을 수 없습니다." });
+    }
+
+    // 5) 성공 응답
+    return res.status(200).json({ message: "삭제 성공" });
+  } catch (err) {
+    console.error("삭제 오류 상세:", err);
+    return res.status(500).json({ error: err.message });
   }
 };
