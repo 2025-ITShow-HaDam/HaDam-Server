@@ -1,11 +1,22 @@
 const db = require('../db');
 
-exports.logEvent = async (req, res) => {
-  const { timestamp } = req.body;
-
+exports.getTodayEvents = async (req, res) => {
   try {
-    await db.query('INSERT INTO event_logs (timestamp) VALUES (?)', [timestamp]);
-    res.status(200).json({ message: '이벤트 저장 완료' });
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayStr = `${yyyy}-${mm}-${dd}`;
+
+    const [rows] = await db.query(`
+      SELECT * FROM event_logs 
+      WHERE DATE(timestamp) = ?
+    `, [todayStr]);
+
+    res.status(200).json({
+      date: todayStr,
+      events: rows || []
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
