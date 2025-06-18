@@ -5,7 +5,7 @@ exports.create = async (req, res) => {
         user_id, email, name,  password
     } = req.body;
 
-    const profile = req.body.profile || 'https://hadam.mirim-it-show.site/assets/profil.svg';
+    const profile = req.body.profile || 'http://hadam.mirim-it-show.site:3000/assets/profil.svg';
 
     try {
         await db.query(
