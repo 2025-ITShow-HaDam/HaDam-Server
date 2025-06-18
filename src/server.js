@@ -28,7 +28,7 @@ app.use('/uprodes', require('./routes/uprodes'));
 app.use('/api/auth', authRouter);
 app.use('/reactions', require('./routes/reactions'));
 app.use('/assets', express.static(path.join(__dirname, 'src/assets')));
-app.use('/event', require('./routes/event'));
+app.use('/event', require('./routes/eventLog'));
 
 
 const PORT = process.env.PORT || 3000;

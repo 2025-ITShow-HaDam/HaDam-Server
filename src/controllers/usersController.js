@@ -35,12 +35,12 @@ exports.getAll = async (req, res) => {
 
 exports.update = async (req, res) => {
     const { user_id } = req.params;
-    const { email, name, profile, password } = req.body;
+    const { profile } = req.body;
 
     try {
         await db.query(
-            'UPDATE users SET email = ?, name = ?, profile = ?, password = ? WHERE user_id = ?',
-            [email, name, profile, password, user_id]
+            'UPDATE users SET profile = ? WHERE user_id = ?',
+            [profile, user_id]
         );
         res.status(200).json({ message: 'User updated' });
     } catch (error) {
