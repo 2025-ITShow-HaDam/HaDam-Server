@@ -2,12 +2,12 @@ const db = require('../db');
 
 exports.create = async (req, res) => {
     const {
-      title, diary, open, date, diary_type, user_id
+      title, diary, open, diary_date, diary_type, user_id
     } = req.body;
     try {
       await db.query(
-        'INSERT INTO write_diary (title, diary, open, date, diary_type, user_id) VALUES (?, ?, ?, ?, ?, ?)',
-        [title, diary, open, date, diary_type, user_id]
+        'INSERT INTO write_diary (title, diary, open, diary_date, diary_type, user_id) VALUES (?, ?, ?, ?, ?, ?)',
+        [title, diary, open, diary_date, diary_type, user_id]
       );
       res.status(201).json({ message: 'diary entry created' });
     } catch (error) {
