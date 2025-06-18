@@ -33,6 +33,17 @@ exports.getAll = async (req, res) => {
     }
 };
 
+exports.get = async (req, res) => {
+    try {
+        const user = await db.query('SELECT * FROM users WHERE user_id = ?', [req.params.user_id]);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        });
+    }
+};
+
 exports.update = async (req, res) => {
     const { user_id } = req.params;
     const { email, name, profile, password } = req.body;
