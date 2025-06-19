@@ -21,14 +21,15 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-app.use('/users', require('./routes/users'));
-app.use('/write-diary', require('./routes/writeDiary'));
-app.use('/replys', require('./routes/replys'));
-app.use('/uprodes', require('./routes/uprodes'));
+app.use('/users', require('src/routes/users'));
+app.use('/write-diary', require('src/routes/writeDiary'));
+app.use('/replys', require('src/routes/replys'));
+app.use('/uprodes', require('src/routes/uprodes'));
 app.use('/api/auth', authRouter);
-app.use('/reactions', require('./routes/reactions'));
-app.use('/assets', express.static(path.join(__dirname, './src/assets')));
-app.use('/event', require('./routes/eventLog'));
+app.use('/reactions', require('src/routes/reactions'));
+app.use('/assets', express.static(path.join(__dirname, 'src', 'assets')));
+
+app.use('/event', require('src/routes/eventLog.js'));
 
 
 const PORT = process.env.PORT || 3000;
