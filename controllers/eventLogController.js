@@ -9,7 +9,7 @@ exports.getTodayEvents = async (req, res) => {
     const dd = String(today.getDate()).padStart(2, '0');
     const todayStr = `${yyyy}-${mm}-${dd}`;
 
-    // write_diary 테이블의 date 컬럼을 기준으로 일기 개수 집계
+    // write_diary 테이블의 date 컬럼을 기준으로 일기 개수 세기
     const [rows] = await db.query(`
       SELECT date, COUNT(*) AS count
       FROM write_diary

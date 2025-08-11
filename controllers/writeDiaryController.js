@@ -33,14 +33,13 @@ exports.getAll = async (req, res) => {
 };
 
 exports.get = async (req, res) => {
+    const userId = req.params.userId;
     try {
-        const [diary] = await db.query('SELECT * FROM write_diary WHERE id = ?', [req.params.id]);
-        if (diary.length === 0) {
-            return res.status(404).json({ message: "일기를 찾을 수 없습니다." });
-        }
-        res.status(200).json(diary[0]);
+        const [rows] = await db.query('SELECT * FROM write_diary WHERE user_id = ?', [userId]);
+        res.status(200).json(rows);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('유저 일기 조회 실패:', error);
+        res.status(500).json({ message: '유저 일기 조회 실패', error });
     }
 };
 
